@@ -24,7 +24,7 @@ const getAndShowAllUsers=async()=>{
                     <div class="user">
                     <div class="btn-group">
                         <button onclick="removeUser('${user.id}')" class="btn active">حذف </button>
-                        <button onclick="editUser('${user.id}')" class="btn ">ویرایش</button>
+                        <button onclick=editUser(${JSON.stringify(user)}) class="btn ">ویرایش</button>
                     </div>
 
                     <div class="direction-wrapper">
@@ -86,10 +86,6 @@ const removeUser=(userID)=>{
    
     
 }
-// form prevent
-form.addEventListener('submit',event=>{
-    event.preventDefault()
-})
 const closeModal=()=>{
     wrapEditModal.classList.remove('visible')
 }
@@ -102,9 +98,21 @@ const emptyEditInput=()=>{
 
 }
 
-const editUser=(userID)=>{
+
+const editUser=(user)=>{
+    console.log(user)
+    userID=user.id
+  
+    fristnameInput.value=user.fristname;
+    lastnameInput.value=user.lastname;
+    usernameInput.value=user.username;
+    passwordInput.value=user.password
+
+
     wrapEditModal.classList.add('visible')
     wrapperUsers.innerHTML=''
+
+
     btnEdit.addEventListener('click',()=>{
 
         const newUserInfos={
@@ -133,22 +141,17 @@ const editUser=(userID)=>{
 
 }
 
-
-
-
-
-
-
-
-
-
+// form prevent
+form.addEventListener('submit',event=>{
+    event.preventDefault()
+})
 
 
 
 
 // close modal
 window.addEventListener('click',event=>{
-    console.log(event);
+    
     if(event.target.className==='container-modal'){
         closeModal()
     }

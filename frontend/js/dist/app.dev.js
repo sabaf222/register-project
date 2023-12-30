@@ -29,7 +29,7 @@ var getAndShowAllUsers = function getAndShowAllUsers() {
           users = _context.sent;
           console.log(users);
           users.forEach(function (user) {
-            wrapperUsers.insertAdjacentHTML('afterbegin', "   \n                    <div class=\"user\">\n                    <div class=\"btn-group\">\n                        <button onclick=\"removeUser('".concat(user.id, "')\" class=\"btn active\">\u062D\u0630\u0641 </button>\n                        <button onclick=\"editUser('").concat(user.id, "')\" class=\"btn \">\u0648\u06CC\u0631\u0627\u06CC\u0634</button>\n                    </div>\n\n                    <div class=\"direction-wrapper\">\n                        <div class=\"direction\">\n                            <h1 class=\"direction_title\">").concat(user.username, "</h1>\n                            <h2 class=\"direction_subtitle\">").concat(user.fristname, "_").concat(user.lastname, "</h2>\n\n                        </div>\n                        <img class=\"img-user\" src=\"../img/user1.png\" alt=\"\">\n                    </div>\n                    \n\n                </div>\n\n            "));
+            wrapperUsers.insertAdjacentHTML('afterbegin', "   \n                    <div class=\"user\">\n                    <div class=\"btn-group\">\n                        <button onclick=\"removeUser('".concat(user.id, "')\" class=\"btn active\">\u062D\u0630\u0641 </button>\n                        <button onclick=editUser(").concat(JSON.stringify(user), ") class=\"btn \">\u0648\u06CC\u0631\u0627\u06CC\u0634</button>\n                    </div>\n\n                    <div class=\"direction-wrapper\">\n                        <div class=\"direction\">\n                            <h1 class=\"direction_title\">").concat(user.username, "</h1>\n                            <h2 class=\"direction_subtitle\">").concat(user.fristname, "_").concat(user.lastname, "</h2>\n\n                        </div>\n                        <img class=\"img-user\" src=\"../img/user1.png\" alt=\"\">\n                    </div>\n                    \n\n                </div>\n\n            "));
           });
 
         case 8:
@@ -67,12 +67,7 @@ var removeUser = function removeUser(userID) {
       });
     }
   });
-}; // form prevent
-
-
-form.addEventListener('submit', function (event) {
-  event.preventDefault();
-});
+};
 
 var closeModal = function closeModal() {
   wrapEditModal.classList.remove('visible');
@@ -82,7 +77,13 @@ var emptyEditInput = function emptyEditInput() {
   fristnameInput.value = '', lastnameInput.value = '', usernameInput.value = '', passwordInput.value = '';
 };
 
-var editUser = function editUser(userID) {
+var editUser = function editUser(user) {
+  console.log(user);
+  userID = user.id;
+  fristnameInput.value = user.fristname;
+  lastnameInput.value = user.lastname;
+  usernameInput.value = user.username;
+  passwordInput.value = user.password;
   wrapEditModal.classList.add('visible');
   wrapperUsers.innerHTML = '';
   btnEdit.addEventListener('click', function () {
@@ -107,12 +108,14 @@ var editUser = function editUser(userID) {
     emptyEditInput();
     closeModal();
   });
-}; // close modal
+}; // form prevent
 
+
+form.addEventListener('submit', function (event) {
+  event.preventDefault();
+}); // close modal
 
 window.addEventListener('click', function (event) {
-  console.log(event);
-
   if (event.target.className === 'container-modal') {
     closeModal();
   }
